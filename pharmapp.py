@@ -8,6 +8,7 @@ from datetime import date
 # Pandas module to deal with the objects: transform them to dataframes, save as csv, etc
 import pandas as pd
 
+
 # function to get html codes
 def get_html (page_name):
     html_file = open("templates/" + page_name + ".html")
@@ -15,17 +16,28 @@ def get_html (page_name):
     html_file.close()
     return content
 
+# fubnction to add a new drug
+def add_new_drug ():
+    #get the entered values
+    drug_name = flask.request.args.get("drug_name") 
+    effect_type = flask.request.args.get("effect_type")
+    exp_date = flask.request.args.get("exp_date")
+    active_ingredient = flask.request.args.get("active_ingredient")
+    storage_location = flask.request.args.get("storage_location")
+    stock = flask.request.args.get("stock")
+    other = flask.request.args.get("other")
+    # combine the new values to one 
+    drug_data = {'Name': drug_name, 'Field of effect': effect_type, 'Expiry date': exp_date, 'Active ingredient': active_ingredient,'Location': storage_location,'Stock available':stock,'Other comments':other}
+    new_data_frame = pd.DataFrame(drug_data) # set the new entry as DF
+    all_drugs_DF = pd.read_csv("database/drugs.csv") #open the exisitng dataset from the csv
+    all_drugs_DF = all_drugs_DF._append(new_data_frame, ignore_index = True) # append the new data to the end
+    all_drugs_DF.to_csv("database/drugs.csv") # save the updated dataset to the csv 
+    return get_html("add") # go back to the clean form
 
-# define a DataFrame, that is the "database" for this app
 
 
 
 
-# function to save a drug
-def add_note(text):
-    new_drug = open ("database/drugs.txt", "a")
-    new_drug.write ("\n" + text) #each note starts in a new line
-    new_drug.close
 
 # function to get the drugs in a DataFrame from csv storage
 def get_all_drugs_in_DF():
@@ -60,10 +72,6 @@ class Drug:
             return usable
 
 
-         
-
-
-
 
 # routes
     
@@ -74,6 +82,11 @@ def home():
 @app.route("/add")
 def add():
     return get_html("add")
+
+@app.route("/addnew")
+def addnew():
+    addnew_page = add_new_drug ()
+    return addnew_page
 
 @app.route("/check")
 def check_start():
