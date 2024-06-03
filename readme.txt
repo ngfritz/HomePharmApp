@@ -31,5 +31,9 @@ Frontend: JavaScript
 Style: CSS
 Webserver: Flask
 
+additional modules that has to be installed:
+Flask: pip instal flask #webserver
+Pandas pip instal Pandas #database mngmnt
+Ipython: pip instal ipython #display tables in HTML
 
 
