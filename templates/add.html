@@ -12,7 +12,7 @@
     <h1>Enter data to register a new drug</h1>
     <h3>* mandatory fields</h3>
 
-   <div></div>
+   <form action="/add" method="get">
     <input type="text" id="drug_name" class="box" name="drug_name" placeholder="Drug's name*">  
     <input type="text" id="effect_type" class="box" name="effect_type" placeholder="Field of effect(e.g painkiller)*">
     <input type="text" id="exp_date" class="box" name="exp_date" placeholder="YYYY-MM-DD*">
@@ -20,8 +20,8 @@
     <input type="text" id="storage_location" class="box" name="storage_location" placeholder="Where it is stored?">
     <input type="text" id="stock" class="box" name="stock" placeholder="Add the quantity you have">
     <input type="text" id="other" class="box" name="other" placeholder="Any other comment">
-    <a href='/addnew'><button>Save</button></a>
-</div>
+    <a href='/add'><button>Save</button></a>
+</form>
   
     
 
