@@ -24,6 +24,21 @@
     
     <img id=logo src="/static/logo.png" alt="PharmApp Logo">
 
+    <h1>Enter data to register a new drug</h1>
+  
+
+   <form action="/add" method="get">
+    <input type="text" class="mandatory" id="drug_name" class="box" name="drug_name" placeholder="*Drug's name">  
+    <input type="text" class="mandatory" id="effect_type" class="box" name="effect_type" placeholder="*Field of effect, e.g painkiller">
+    <input type="text" class="mandatory" id="exp_date" class="box" name="exp_date" placeholder="*YYYY-MM-DD">
+    <input type="text" id="active_ingredient" class="box" name="active_ingredient" placeholder="Active ingredient">
+    <input type="text" id="storage_location" class="box" name="storage_location" placeholder="Where it is stored?">
+    <input type="text" id="stock" class="box" name="stock" placeholder="Add the quantity you have">
+    <input type="text" id="other" class="box" name="other" placeholder="Any other comment">
+    <input type="submit" value="Save">
+</form>
+<h3>* mandatory fields</h3>
+
     <script  src="/static/script.js"></script>
 
 

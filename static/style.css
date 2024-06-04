@@ -68,3 +68,8 @@ header {
     border-width: 1px;
     padding: 5px;
 }
+
+#mandatory_field{
+    font-size: 25px;
+    color: red;
+}

@@ -19,21 +19,28 @@ def get_html (page_name):
 # fubnction to add a new drug
 def add_new_drug ():
     # get the entered values
-    drug_name = [flask.request.args.get("drug_name")] 
-    effect_type = [flask.request.args.get("effect_type")]
-    exp_date = [flask.request.args.get("exp_date")]
-    active_ingredient = [flask.request.args.get("active_ingredient")]
-    storage_location = [flask.request.args.get("storage_location")]
-    stock = [flask.request.args.get("stock")]
-    other = [flask.request.args.get("other")]
-    print(drug_name)
-    # combine the new values to one 
-    drug_data = {'Name': drug_name, 'Field of effect': effect_type, 'Expiry date': exp_date, 'Active ingredient': active_ingredient,'Location': storage_location,'Stock available':stock,'Other comments':other}
-    new_data_frame = pd.DataFrame(drug_data) # set the new entry as DF
-    all_drugs_DF = pd.read_csv("database/drugs.csv", index_col=[0]) #open the exisitng dataset from the csv
-    all_drugs_DF = all_drugs_DF._append(new_data_frame, ignore_index = True) # append the new data to the end
-    all_drugs_DF.to_csv("database/drugs.csv") # save the updated dataset to the csv 
-    return get_html("add") # go back to the clean form
+    dn = flask.request.args.get("drug_name")
+    et = flask.request.args.get("effect_type")
+    ed = flask.request.args.get("exp_date")
+    if dn == "" or et == "" or ed == "":
+        html_page = get_html("index")
+        message = "<h3 id='mandatory_field'>* Enter vaslue(s) to the mandatory fields!</h3>"
+        return html_page.replace("<h3>* mandatory fields</h3>", message)
+    else:
+        drug_name = [flask.request.args.get("drug_name")] 
+        effect_type = [flask.request.args.get("effect_type")]
+        exp_date = [flask.request.args.get("exp_date")]
+        active_ingredient = [flask.request.args.get("active_ingredient")]
+        storage_location = [flask.request.args.get("storage_location")]
+        stock = [flask.request.args.get("stock")]
+        other = [flask.request.args.get("other")]
+        # combine the new values to one 
+        drug_data = {'Name': drug_name, 'Field of effect': effect_type, 'Expiry date': exp_date, 'Active ingredient': active_ingredient,'Location': storage_location,'Stock available':stock,'Other comments':other}
+        new_data_frame = pd.DataFrame(drug_data) # set the new entry as DF
+        all_drugs_DF = pd.read_csv("database/drugs.csv", index_col=[0]) #open the exisitng dataset from the csv
+        all_drugs_DF = all_drugs_DF._append(new_data_frame, ignore_index = True) # append the new data to the end
+        all_drugs_DF.to_csv("database/drugs.csv") # save the updated dataset to the csv 
+        return get_html("add") # go back to the clean form
 
 # function to get all drugs in a html table from csv storage
 def get_all_drugs_in_html():
