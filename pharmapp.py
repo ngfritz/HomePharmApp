@@ -35,18 +35,23 @@ def add_new_drug ():
     all_drugs_DF.to_csv("database/drugs.csv") # save the updated dataset to the csv 
     return get_html("add") # go back to the clean form
 
-
-
-
-
-
-# function to get the drugs in a DataFrame from csv storage
-def get_all_drugs_in_DF():
-    all_drugs_DF = pd.read_csv("database/drugs.csv")
+# function to get all drugs in a html table from csv storage
+def get_all_drugs_in_html():
+    all_drugs_DF = pd.read_csv("database/drugs.csv", index_col=[0])
     all_drugs_html_table = all_drugs_DF.to_html()
     return all_drugs_html_table
 
+# function to get all drugs as DF from csv storage
+def get_all_drugs_in_DF():
+    all_drugs_DF = pd.read_csv("/datadrugs.csv", index_col=[0])
+    return all_drugs_DF
 
+# funtion to search in the drug DataFrame and return a rows that contains the search term as a list
+def search_in_drugs_DF(text):
+    all_drugs = get_all_drugs_in_DF()
+    result = (all_drugs.loc[all_drugs['Name'].isin([text])])
+    drug = result.to_dict('list')
+    return drug
 
 # each drug in the inventory is one object defined by the drug class. it has some parameters
 class Drug:
@@ -72,7 +77,18 @@ class Drug:
             usable = False
             return usable
 
-
+# function to create an object from the list that was returned from the search
+def make_an_object(text):
+    drug = search_in_drugs_DF(text)
+    drug_name = ''.join(drug['Name'])
+    effect_type = ''.join(drug['Field of effect'])
+    exp_date = ''.join(drug['Expiry date'])
+    active_ingredient = ''.join(drug['Active ingredient'])
+    storage_location = ''.join(drug['Location'])
+    stock = ''.join(drug['Stock available'])
+    other = ''.join(drug['Other comments'])
+    drug_hit = Drug(drug_name, effect_type, exp_date, active_ingredient, storage_location, stock, other)
+    return drug_hit
 
 # routes
     
@@ -82,21 +98,29 @@ def home():
 
 @app.route("/add")
 def add():
-    addnew_page = add_new_drug ()
+    addnew_page = add_new_drug () # run the add_new_drug function: save the entered data and reload the page
     return addnew_page
 
 @app.route("/check")
 def check_start():
     html_page = get_html("check")
-    table = ""
     table = "Search or list all."
     return html_page.replace("$$DRUGS_TABLE$$", table)
+
+@app.route("/check_list")
+def check_list():
+    html_page = get_html("check")
+    text = flask.request.args.get("text")
+    make_an_object(text)
+
+    return html_page.replace("$$DRUGS_TABLE$$", table)
+
 
 @app.route("/check_all")
 def check_all():
     html_page = get_html("check")
     table = ""
-    table = get_all_drugs_in_DF()
+    table = get_all_drugs_in_html()
     return html_page.replace("$$DRUGS_TABLE$$", table)
 
 @app.route("/settings")
