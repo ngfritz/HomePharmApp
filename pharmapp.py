@@ -115,7 +115,7 @@ def check_list():
     drug = search_in_drugs_DF(search_name) # search in the loaded DF, return the row that matches
     drug_data = make_an_object(drug) #create an object from the hit
     if len(drug_data.drug_name) == 0: # if the object is empty (there was no hit, return message)
-        table = "<p>You dont have such a drug in your inventory.</p> "
+        table = "<p>You don't have such a drug in your inventory.</p> "
     else: # othervise check with the method if it's still usable
         usable = drug_data.is_usable(drug_data.exp_date)
         if usable == True: #if usable show message accordingly paragaph id determines color coding (green)

@@ -7,3 +7,44 @@
     color: red;
     font-weight: bolder;
 }
+
+header {
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Franklin Gothic Medium';
+    font-weight: bold;
+    color: white;
+    background-color: rgb(21, 65, 208);
+    padding: 10px;
+}
+.navbar {
+    color: black;
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+.nav{
+    border-color: black;
+    color: black;
+}
+
+#current {
+    font-weight: bolder;
+}
+
+#welcome {
+    text-align: center;
+    color: red;
+    font-family: fantasy;
+}
+
+#logo {
+    align-items: center;
+}
+
+#drug_name {
+    border-color: red;
+}
