@@ -1,11 +1,13 @@
 #usable {
     color: green;
     font-weight: bold;
+    font-size: 30px
 }
 
 #non_usable {
     color: red;
     font-weight: bolder;
+    font-size: 30px
 }
 
 #dont_have{
@@ -57,4 +59,12 @@ header {
 
 .mandatory {
     border-color: red;
+}
+
+.table {
+    font-size: 30px;
+    border-bottom-style: solid;
+    border-color: black;
+    border-width: 1px;
+    padding: 5px;
 }
