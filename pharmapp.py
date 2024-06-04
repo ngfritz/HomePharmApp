@@ -43,13 +43,13 @@ def get_all_drugs_in_html():
 
 # function to get all drugs as DF from csv storage
 def get_all_drugs_in_DF():
-    all_drugs_DF = pd.read_csv("/datadrugs.csv", index_col=[0])
+    all_drugs_DF = pd.read_csv("/database/drugs.csv", index_col=[0])
     return all_drugs_DF
 
 # funtion to search in the drug DataFrame and return a rows that contains the search term as a list
-def search_in_drugs_DF(text):
-    all_drugs = get_all_drugs_in_DF()
-    result = (all_drugs.loc[all_drugs['Name'].isin([text])])
+def search_in_drugs_DF(search_name):
+    all_drugs = pd.read_csv("database/drugs.csv", index_col=[0])
+    result = (all_drugs.loc[all_drugs['Name'].isin([search_name])])
     drug = result.to_dict('list')
     return drug
 
@@ -70,7 +70,7 @@ class Drug:
         valid_until = exp_date.replace("-0","-")
         to_numbers = valid_until.split("-")
         dates = date(int(to_numbers[0]), int(to_numbers[1]), int(to_numbers[2]))
-        if valid_until > today:
+        if dates > today:
             usable = True
             return usable
         else:
@@ -78,8 +78,8 @@ class Drug:
             return usable
 
 # function to create an object from the list that was returned from the search
-def make_an_object(text):
-    drug = search_in_drugs_DF(text)
+def make_an_object(drug):
+    #drug = search_in_drugs_DF(search_name)
     drug_name = ''.join(drug['Name'])
     effect_type = ''.join(drug['Field of effect'])
     exp_date = ''.join(drug['Expiry date'])
@@ -110,9 +110,18 @@ def check_start():
 @app.route("/check_list")
 def check_list():
     html_page = get_html("check")
-    text = flask.request.args.get("text")
-    make_an_object(text)
-
+    table = ""
+    search_name = flask.request.args.get("search_name") #get the search term
+    drug = search_in_drugs_DF(search_name) # search in the loaded DF, return the row that matches
+    drug_data = make_an_object(drug) #create an object from the hit
+    if len(drug_data.drug_name) == 0: # if the object is empty (there was no hit, return message)
+        table = "<p>You dont have such a drug in your inventory.</p> "
+    else: # othervise check with the method if it's still usable
+        usable = drug_data.is_usable(drug_data.exp_date)
+        if usable == True: #if usable show message accordingly paragaph id determines color coding (green)
+            table = "<p id=usable>You can use this " + drug_data.drug_name + ".</p>"
+        else: #if not usable show message accordingly paragaph id determines color coding (red)
+            table = "<p id=non_usable>This " + drug_data.drug_name + "has expired. You shouldn't take it.</p>"
     return html_page.replace("$$DRUGS_TABLE$$", table)
 
 

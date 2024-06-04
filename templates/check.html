@@ -9,8 +9,12 @@
 <body>
     <header>PharmApp</header>
     <br>
-    <input type="text" id="search_name" class="box" name="drug_name" placeholder="Drug's name">
-    <a href='/check_list'><button>Search</button></a>
+    <form action="/check_list" method="get">
+        <input type="text" id="search_name" class="box" name="search_name" placeholder="Drug's name">
+        <input type="submit" value="Search">
+    </form>
+    <!-- <input type="text" id="search_name" class="box" name="search_name" placeholder="Drug's name">
+    <a href='/check_list'><button>Search</button></a> -->
 <br>
     <a href='/check_all'><button>List all</button></a>
     

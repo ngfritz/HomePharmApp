@@ -1,0 +1,9 @@
+#usable {
+    color: green;
+    font-weight: bold;
+}
+
+#non_usable {
+    color: red;
+    font-weight: bolder;
+}
