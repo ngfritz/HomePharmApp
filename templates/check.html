@@ -8,22 +8,34 @@
 </head>
 <body>
     <header>PharmApp</header>
+    <nav>
+
+        <div class="navbar">
+          <a class="nav" href="/">Home</a>
+          <a class="nav" href="/add">Add Drugs</a>
+          <a class="nav" id="currentpage" href="/check">Search Drugs</a>
+          <a class="nav" href="/settings">Settings</a>
+
+        </div>
+    
+    </nav>
     <br>
+    <div>
+        $$DRUGS_TABLE$$
+    </div>
+
+    <h3>Enter the drug's name that you're looking for:</h3>
     <form action="/check_list" method="get">
         <input type="text" id="search_name" class="box" name="search_name" placeholder="Drug's name">
         <input type="submit" value="Search">
     </form>
-    <!-- <input type="text" id="search_name" class="box" name="search_name" placeholder="Drug's name">
-    <a href='/check_list'><button>Search</button></a> -->
-<br>
+  
+    <br>
+    <h3>List all your inventory</h3>    
     <a href='/check_all'><button>List all</button></a>
     
   <br>
     
-    <div>
-        $$DRUGS_TABLE$$
-    </div>
-    <br>
     
 
     <script  src="/static/script.js"></script>

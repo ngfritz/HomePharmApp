@@ -8,6 +8,11 @@
     font-weight: bolder;
 }
 
+#dont_have{
+    color: rgb(219, 144, 5);
+    font-weight: bolder;
+}
+
 header {
     text-align: center;
     font-size: 50px;
@@ -18,7 +23,6 @@ header {
     padding: 10px;
 }
 .navbar {
-    color: black;
     background-color: antiquewhite;
     display: flex;
     flex-direction: row;
@@ -29,10 +33,13 @@ header {
 .nav{
     border-color: black;
     color: black;
+    border: 1px solid black;
+    padding: 10px;
+    font-weight: bolder;
 }
 
-#current {
-    font-weight: bolder;
+#currentpage {
+    background-color: aquamarine;
 }
 
 #welcome {
@@ -42,9 +49,12 @@ header {
 }
 
 #logo {
-    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    text-align: center;
 }
 
-#drug_name {
+.mandatory {
     border-color: red;
 }
