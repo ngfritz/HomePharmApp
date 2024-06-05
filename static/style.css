@@ -84,3 +84,16 @@ header {
 #effect_type{
     background-color: white;
 }
+
+.inputboxes{
+    font-family: Helvetica;
+}
+
+#mandatoryField{
+    display: inline-block;
+    justify-content: left;
+    margin: 1 auto;
+    text-align: center;
+    border: 2px solid red;
+    padding: 2px;
+}
