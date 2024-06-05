@@ -48,6 +48,7 @@ header {
     text-align: center;
     color: red;
     font-family: fantasy;
+    font-size: 20px;
 }
 
 #logo {
@@ -72,4 +73,10 @@ header {
 #mandatory_field{
     font-size: 25px;
     color: red;
+}
+#navUsername{
+    color: black;
+    border: 1px solid antiquewhite;
+    padding: 10px;
+    font-weight: bolder;
 }
