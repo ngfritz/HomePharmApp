@@ -18,19 +18,7 @@
 16,Drug2,sick2,2025-01-15,molecule,Box3,200g,test2
 17,Drug3,sick3,2026-09-04,molecule3,Box2,2,ok
 18,Drug3,sick3,2026-09-04,molecule3,Box2,2,ok
-19,,,,,,,
-20,,,,,,,
-21,,,,,,,
-22,,,,,,,
-23,,,,,,,
-24,,,,,,,
-25,,,,,,,
-26,,,,,,,
-27,,,,,,,
-28,,,,,,,
-29,,,,,,,
-30,,,,,,,
-31,,,,,,,
-32,Calmopyrin,fever reducer,1998-03-15,acetyl salycilic acid Calcium salt,bin,34 tablet,too old
-33,Neocitran,anti-flue,2026-05-25,"mixture, paracetamol",box2,3 packs,
-34,Doxacyline,antibiotics,2025-06-23,sadfgsad,box,10g,test
+19,Calmopyrin,fever reducer,1998-03-15,acetyl salycilic acid Calcium salt,bin,34 tablet,too old
+20,Neocitran,anti-flue,2026-05-25,"mixture, paracetamol",box2,3 packs,
+21,Doxacyline,antibiotics,2025-06-23,sadfgsad,box,10g,test
+22,Drug12,antibiotics,2024-08-30,molecules,Box,1kg,test
