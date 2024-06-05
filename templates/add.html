@@ -8,18 +8,24 @@
 </head>
 <body>
     <header>PharmApp</header>
-    
     <nav>
 
         <div class="navbar">
           <a class="nav" href="/">Home</a>
-          <a class="nav" href="/add">Add Drugs</a>
+          <a class="nav" id="currentpage" href="/add">Add Drugs</a>
           <a class="nav" href="/check">Search Drugs</a>
-          <a class="nav" id="currentpage" href="/settings">Settings</a>
+          <a class="nav" href="/settings">Settings</a>
 
         </div>
     
     </nav>
+    <h2>You've just registered the following drug:</h2>
+    <div id="added_drug">
+        
+    </div>
+
+    <a href='/'><button id="backToAddButton">Add a new drug</button></a>
+    <!-- <input href="/" type="button" value="Add a new drug" id="backToAddButton"> -->
 
     
 

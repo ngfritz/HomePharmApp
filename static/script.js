@@ -5,7 +5,10 @@ const active_ingredient = document.getElementById ("active_ingredient");
 const storage_location = document.getElementById ("storage_location");
 const stock = document.getElementById ("stock");
 const other = document.getElementById ("other");
-const added_drug = document.getElementById ("added_drug")
+const added_drug = document.getElementById ("added_drug");
+const addNewDrugButton = document.getElementById("addNewDrugButton");
+const backToAddButton = document.getElementById("backToAddButton");
+
 
 function saveDrug(){
     localStorage.setItem("Drug Name", drug_name.value);
@@ -15,58 +18,21 @@ function saveDrug(){
     localStorage.setItem("Storage Location", storage_location.value);
     localStorage.setItem("Stock available", stock.value);
     localStorage.setItem("Other Comment", other.value);
+    dn = localStorage.getItem("Drug Name");
+    et = localStorage.getItem("Field of Effect");
+    ed = localStorage.getItem("Expiry Date");
+    ai = localStorage.getItem("Active Ingredient");
+    sl = localStorage.getItem("Storage Location");
+    stk = localStorage.getItem("Stock available");
+    oth = localStorage.getItem("Other Comment");
+    table = "<p>Drug Name: " + dn + "</p><p>Fiels of Effect: " + et + "</p><p>Expiry Date: " + ed + "</p><p>Active Ingredient: " + ai + "</p><p>Storage Location: " + sl + "</p><p>Stock available: " + stk + "</p><p>Other comments: " + oth + "</p>"; 
+    added_drug.innerHTML = table;
 };
-saveDrug()
-function getValuesForTable(){
 
-}
+function clean(){
+    localStorage.clear();
+};
     
-table =<table class="table">
-        <thead>
-            <tr>
-            <th scope="col">Characteristic</th>
-            <th scope="col">Adde value</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-            <th scope="row"></th>
-            <td>Drug Name</td>
-            <td>localStorage.getItem("Drug Name")</td>
-            </tr>
-            <tr>
-            <th scope="row"></th>
-            <td>Field of Effect</td>
-            <td>localStorage.getItem("Field of Effect")</td>
-            </tr>
-            <tr>
-            <th scope="row"></th>
-            <td>Expiry Date</td>
-            <td>localStorage.getItem("Expiry Date")</td>
-            </tr>
-            <tr>
-            <th scope="row"></th>
-            <td>Active Ingredient</td>
-            <td>localStorage.getItem("Active Ingredient")</td>
-            </tr>
-            <tr>
-            <th scope="row"></th>
-            <td>Storege Location</td>
-            <td>localStorage.getItem("Storege Location")</td>
-            </tr>
-            <tr>
-            <th scope="row"></th>
-            <td>Stock available</td>
-            <td>localStorage.getItem("Stock available")</td>
-            </tr>
-            <tr>
-            <th scope="row"></th>
-            <td>Other Comment</td>
-            <td>localStorage.getItem("Other Comment")</td>
-            </tr>
-        </tbody>
-        </table>;
-        
-added_drug.innerHTML = table
 
-backToAddButton.addEventListener("click",saveDrug)
+addNewDrugButton.addEventListener("click",saveDrug);
+backToAddButton.addEventListener("click",clean);
