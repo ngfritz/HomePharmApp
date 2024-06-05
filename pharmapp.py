@@ -86,16 +86,38 @@ class Drug:
 
 # function to create an object from the list that was returned from the search
 def make_an_object(drug):
-    #drug = search_in_drugs_DF(search_name)
-    drug_name = ''.join(drug['Name'])
-    effect_type = ''.join(drug['Field of effect'])
-    exp_date = ''.join(drug['Expiry date'])
-    active_ingredient = ''.join(drug['Active ingredient'])
-    storage_location = ''.join(drug['Location'])
-    stock = ''.join(drug['Stock available'])
-    other = ''.join(drug['Other comments'])
-    drug_hit = Drug(drug_name, effect_type, exp_date, active_ingredient, storage_location, stock, other)
-    return drug_hit
+    #drug = search_in_drugs_DF(search_name) # I rather run this separately, got too complicated
+    drug_name = ','.join(drug['Name']) # get all the coulumns that is in the hit list to a dictionary
+    drug_names = drug_name.split(",") # transform the dictionary values to a list
+    effect_type = ','.join(drug['Field of effect'])
+    effect_types = effect_type.split(",")
+    exp_date = ','.join(drug['Expiry date'])
+    exp_dates = exp_date.split(",")
+    active_ingredient = ','.join(drug['Active ingredient'])
+    active_ingredients = active_ingredient.split(",")
+    storage_location = ','.join(drug['Location'])
+    storage_locations = storage_location.split(",")
+    stock = ','.join(drug['Stock available'])
+    stocks = stock.split(",")
+    other = ','.join(drug['Other comments'])
+    others = other.split(",")
+    # for each hit (hit = one row in the DataFrame create an object up to the number of hits)
+    table = "" # variable to store the results
+    if drug_names == ['']: # if the object is empty (there was no hit, return message)
+        table = "<p class='table' id='dont_have'>You don't have such a drug in your inventory.</p> "
+        return table
+    else: #if there's hit create on object for all of them
+        for i in range(len(drug_names)):
+            # define a variable that has all the parameters for the Drug class as a list
+            param = [drug_names[i], effect_types[i], exp_dates[i], active_ingredients[i], storage_locations[i], stocks[i], others[i]]
+            drug_data = Drug(*param) # then create the object
+            usable = drug_data.is_usable(drug_data.exp_date) #check usability (before or after exp. date)
+            if usable == True: #if usable show message accordingly paragaph id determines color coding (green)
+                table += "<p id='usable'>You can use this <b>" + drug_data.drug_name + "</b> until <b>" + drug_data.exp_date + "</b>.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
+            else:
+                table += "<p id='non_usable'>This <b>" + drug_data.drug_name + "</b> has expired on <b>"  + drug_data.exp_date + "</b>. You shouldn't take it.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
+        return table
+    
 
 # routes
     
@@ -120,15 +142,17 @@ def check_list():
     table = ""
     search_name = flask.request.args.get("search_name") #get the search term
     drug = search_in_drugs_DF(search_name) # search in the loaded DF, return the row that matches
-    drug_data = make_an_object(drug) #create an object from the hit
-    if len(drug_data.drug_name) == 0: # if the object is empty (there was no hit, return message)
-        table = "<p class='table' id='dont_have'>You don't have such a drug in your inventory.</p> "
-    else: # othervise check with the method if it's still usable
-        usable = drug_data.is_usable(drug_data.exp_date)
-        if usable == True: #if usable show message accordingly paragaph id determines color coding (green)
-            table = "<p id='usable'>You can use this <b>" + drug_data.drug_name + "</b> until <b>" + drug_data.exp_date + "</b>.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
-        else: #if not usable show message accordingly paragaph id determines color coding (red)
-            table = "<p id='non_usable'>This <b>" + drug_data.drug_name + "</b> has expired on <b>"  + drug_data.exp_date + "</b>. You shouldn't take it.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
+    #drug_data = make_an_object(drug) #create an object from the hit
+    # if len(drug_data.drug_name) == 0: # if the object is empty (there was no hit, return message)
+    #     table = "<p class='table' id='dont_have'>You don't have such a drug in your inventory.</p> "
+    # else: # othervise check with the method if it's still usable
+    #     usable = drug_data.is_usable(drug_data.exp_date)
+    #     if usable == True: #if usable show message accordingly paragaph id determines color coding (green)
+    #         table = "<p id='usable'>You can use this <b>" + drug_data.drug_name + "</b> until <b>" + drug_data.exp_date + "</b>.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
+    #     else: #if not usable show message accordingly paragaph id determines color coding (red)
+    #         table = "<p id='non_usable'>This <b>" + drug_data.drug_name + "</b> has expired on <b>"  + drug_data.exp_date + "</b>. You shouldn't take it.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
+    table = make_an_object(drug)
+    print("table in route: " + str(table))
     return html_page.replace("$$DRUGS_TABLE$$", table)
 
 
