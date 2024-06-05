@@ -80,3 +80,7 @@ header {
     padding: 10px;
     font-weight: bolder;
 }
+
+#effect_type{
+    background-color: white;
+}

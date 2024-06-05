@@ -30,7 +30,15 @@
 
    <form action="/add" method="get">
     <input type="text" class="mandatory" id="drug_name" class="box" name="drug_name" placeholder="*Drug's name">  
-    <input type="text" class="mandatory" id="effect_type" class="box" name="effect_type" placeholder="*Field of effect, e.g painkiller">
+    <select name="effect_type" id="effect_type" class="mandatory">
+        <option selected="selected" value="" disabled selected>Choose a Field of effect</option>
+        <option value="painkiller">Painkiller</option>
+        <option value="antibiotics">Antibiotics</option>
+        <option value="fever">Fever Reducer</option>
+        <option value="antihistamine">Antihistamine</option>
+        <option value="antacid">Antacid</option>
+        <option value="other">Other</option>
+    </select>
     <input type="text" class="mandatory" id="exp_date" class="box" name="exp_date" placeholder="*YYYY-MM-DD">
     <input type="text" id="active_ingredient" class="box" name="active_ingredient" placeholder="Active ingredient">
     <input type="text" id="storage_location" class="box" name="storage_location" placeholder="Where it is stored?">
