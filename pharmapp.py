@@ -142,17 +142,7 @@ def check_list():
     table = ""
     search_name = flask.request.args.get("search_name") #get the search term
     drug = search_in_drugs_DF(search_name) # search in the loaded DF, return the row that matches
-    #drug_data = make_an_object(drug) #create an object from the hit
-    # if len(drug_data.drug_name) == 0: # if the object is empty (there was no hit, return message)
-    #     table = "<p class='table' id='dont_have'>You don't have such a drug in your inventory.</p> "
-    # else: # othervise check with the method if it's still usable
-    #     usable = drug_data.is_usable(drug_data.exp_date)
-    #     if usable == True: #if usable show message accordingly paragaph id determines color coding (green)
-    #         table = "<p id='usable'>You can use this <b>" + drug_data.drug_name + "</b> until <b>" + drug_data.exp_date + "</b>.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
-    #     else: #if not usable show message accordingly paragaph id determines color coding (red)
-    #         table = "<p id='non_usable'>This <b>" + drug_data.drug_name + "</b> has expired on <b>"  + drug_data.exp_date + "</b>. You shouldn't take it.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
     table = make_an_object(drug)
-    print("table in route: " + str(table))
     return html_page.replace("$$DRUGS_TABLE$$", table)
 
 
