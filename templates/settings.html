@@ -25,8 +25,21 @@
     <div><h1>Do you want to change your username?</h1>
         <input type="text" placeholder="Your Name" id="enterUsername">
         <br><br>
-        <a href="/"><input type="submit" value="Save" id="changeUsernameButton"></a>'</div>
+        <a href="/"><input type="submit" value="Save" id="changeUsernameButton"></a>
+    </div>
+<br>
+<h1>Do you want to delete of your data?</h1>
 
+    <form action="/check_all" method="get">
+        <select name="delete" id="selectDelete">
+            <option selected="selected" value="" disabled selected>Choose what you want to delete</option>
+            <option value="delete_all">Delete all</option>
+            <option value="delete_expired">Delete expired drugs</option>
+        </select>
+        <br><br>
+        <a href="/check_all"></a><input type="submit" value="Delete" id="deleteAll" ></a>
+    </form>
+    
     <script  src="/static/script_settings.js"></script>
 
 

@@ -161,6 +161,12 @@ def make_an_object_by_effect(drug):
                 table += "<p id='non_usable'><b>" + drug_data.drug_name + "</b>: This drug has expired on <b>"  + drug_data.exp_date + "</b>. You shouldn't take it.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
         return table
 
+# function to delete all data from the csv
+def delete_all_data():
+    all_drugs_DF = pd.read_csv("/database/drugs.csv")
+    all_drugs_DF = all_drugs_DF[0:]
+    all_drugs_DF.to_csv("database/drugs.csv")
+
 # routes
     
 @app.route("/")
@@ -209,5 +215,11 @@ def check_all():
 @app.route("/settings")
 def settings():
     return get_html("settings")
+
+@app.route("/settings_del_all", methods=['POST'])
+def delete_all():
+    delete_all_data()
+    return get_html("settings")
+
 
 # python -m flask --app pharmapp.py run
