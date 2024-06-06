@@ -56,8 +56,12 @@ def get_all_drugs_in_DF():
 # funtion to search in the drug DataFrame and return all rows that contains the search term "Name" as a list
 def search_name_in_drugs_DF(search_name):
     all_drugs = pd.read_csv("database/drugs.csv", index_col=[0])
-    result = (all_drugs.loc[all_drugs['Name'].isin([search_name])])
+    # result = (all_drugs.loc[all_drugs['Name'].isin([search_name])]) # exact match
+    # result = (all_drugs.loc[all_drugs['Name'].str.contains([search_name])]) # partial match
+    result = (all_drugs.loc[all_drugs['Name'].str.lower().isin([search_name.lower()])]) # case insensitive search
+    print(result)
     drug = result.to_dict('list')
+    print(drug)
     return drug
 
 # function to search in the drug DataFrame and return all rows that contains the search term "Field of Effect" as a list
