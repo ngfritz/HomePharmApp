@@ -86,7 +86,7 @@ class Drug:
     # method to check usability, if the expiry date is before the current date it shouldn't be used.
     def is_usable (self, exp_date):
         today = date.today()
-        valid_until = exp_date.replace("-0","-")
+        valid_until = exp_date.replace("-0","-") # transform the strings to date
         to_numbers = valid_until.split("-")
         dates = date(int(to_numbers[0]), int(to_numbers[1]), int(to_numbers[2]))
         if dates > today:
@@ -95,6 +95,13 @@ class Drug:
         else:
             usable = False
             return usable
+    
+    # methode to check availability (stock > 0)
+    def available (self, stock):
+        if str(stock) == "0":
+            availability = False
+            return availability
+        
 
 # function to create an object from the list that was returned from the search by name
 def make_an_object_by_name(drug):
@@ -123,8 +130,12 @@ def make_an_object_by_name(drug):
             param = [drug_names[i], effect_types[i], exp_dates[i], active_ingredients[i], storage_locations[i], stocks[i], others[i]]
             drug_data = Drug(*param) # then create the object
             usable = drug_data.is_usable(drug_data.exp_date) #check usability (before or after exp. date)
+            available = drug_data.available(drug_data.stock) # check availability 
             if usable == True: #if usable, show message accordingly paragaph id determines color coding (green), append all
-                table += "<p id='usable'><b>"+ drug_data.drug_name +":</b> You can use this drug until <b>" + drug_data.exp_date + "</b>.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
+                if available == False:
+                    table += "<p id='usable'><b>"+ drug_data.drug_name +":</b> You can use this drug until <b>" + drug_data.exp_date + "</b>.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It was stored in: <b>" + drug_data.storage_location + "</b> but you dont have anything left. You also registered the following comment: " + drug_data.other + ".</p>"
+                else:
+                    table += "<p id='usable'><b>"+ drug_data.drug_name +":</b> You can use this drug until <b>" + drug_data.exp_date + "</b>.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
             else: #if NOT usable, show message accordingly paragaph id determines color coding (red), append all
                 table += "<p id='non_usable'><b>" + drug_data.drug_name + "</b>: This drug has expired on <b>"  + drug_data.exp_date + "</b>. You shouldn't take it.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
         return table
@@ -156,8 +167,12 @@ def make_an_object_by_effect(drug):
             param = [drug_names[i], effect_types[i], exp_dates[i], active_ingredients[i], storage_locations[i], stocks[i], others[i]]
             drug_data = Drug(*param) # then create the object
             usable = drug_data.is_usable(drug_data.exp_date) #check usability (before or after exp. date)
+            available = drug_data.available(drug_data.stock) # check availability 
             if usable == True: #if usable, show message accordingly paragaph id determines color coding (green)
-                table += "<p id='usable'><b>"+ drug_data.drug_name +":</b> You can use this drug until <b>" + drug_data.exp_date + "</b>.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
+                if available == False:
+                    table += "<p id='usable'><b>"+ drug_data.drug_name +":</b> You can use this drug until <b>" + drug_data.exp_date + "</b>.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It was stored in: <b>" + drug_data.storage_location + "</b> but you dont have anything left. You also registered the following comment: " + drug_data.other + ".</p>"
+                else:
+                    table += "<p id='usable'><b>"+ drug_data.drug_name +":</b> You can use this drug until <b>" + drug_data.exp_date + "</b>.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
             else: #if NOT usable, show message accordingly paragaph id determines color coding (red)
                 table += "<p id='non_usable'><b>" + drug_data.drug_name + "</b>: This drug has expired on <b>"  + drug_data.exp_date + "</b>. You shouldn't take it.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
         return table
