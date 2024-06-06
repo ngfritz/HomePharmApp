@@ -50,7 +50,7 @@ def get_all_drugs_in_html():
 
 # function to get all drugs as DF from csv storage
 def get_all_drugs_in_DF():
-    all_drugs_DF = pd.read_csv("/database/drugs.csv", index_col=[0])
+    all_drugs_DF = pd.read_csv("database/drugs.csv", index_col=[0])
     return all_drugs_DF
 
 # funtion to search in the drug DataFrame and return all rows that contains the search term "Name" as a list
@@ -163,9 +163,20 @@ def make_an_object_by_effect(drug):
 
 # function to delete all data from the csv
 def delete_all_data():
-    all_drugs_DF = pd.read_csv("/database/drugs.csv")
-    all_drugs_DF = all_drugs_DF[0:]
-    all_drugs_DF.to_csv("database/drugs.csv")
+    all_drugs_DF = get_all_drugs_in_DF() # load csv to a DF
+    all_drugs_DF = all_drugs_DF[:0] # keep all raws after roe[0]-1 => delete all
+    all_drugs_DF.to_csv("database/drugs.csv") # save the empty DF to csv
+    return get_html("settings")
+
+# function to delete expired drugs from the csv   
+def delete_expired():
+    today = date.today() # define today's date
+    all_drugs_DF = get_all_drugs_in_DF() # load csv to a DF 
+    all_drugs_DF['Expiry date'] = pd.to_datetime(all_drugs_DF['Expiry date'], format='%Y-%m-%d') # transform Expiry date str values to date
+    result = all_drugs_DF.loc[(all_drugs_DF['Expiry date'] >= str(today))] # filter for those that are not yet expired and save in another DF
+    result.to_csv("database/drugs.csv") #save the not expitred to the database csv
+    return get_html("settings")
+    
 
 # routes
     
@@ -216,10 +227,21 @@ def check_all():
 def settings():
     return get_html("settings")
 
-@app.route("/settings_del_all", methods=['POST'])
+@app.route("/settings_del")
 def delete_all():
-    delete_all_data()
-    return get_html("settings")
-
+    delete_term = ""
+    delete_term = flask.request.args.get("delete")
+    if str(delete_term) == "delete_all":
+        print(delete_term)
+        print("____ALL_____")
+        deleted_all = delete_all_data()
+        return deleted_all
+    elif str(delete_term) == "delete_expired":
+        print(delete_term)
+        print("____EXP_____")
+        deleted_expired = delete_expired()
+        return deleted_expired
+    else:
+        pass
 
 # python -m flask --app pharmapp.py run

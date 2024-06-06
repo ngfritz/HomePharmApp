@@ -30,16 +30,16 @@
 <br>
 <h1>Do you want to delete of your data?</h1>
 
-    <form action="/check_all" method="get">
+    <form action="/settings_del" method="get">
         <select name="delete" id="selectDelete">
             <option selected="selected" value="" disabled selected>Choose what you want to delete</option>
-            <option value="delete_all">Delete all</option>
             <option value="delete_expired">Delete expired drugs</option>
+            <option value="delete_all">Delete all</option>
         </select>
         <br><br>
-        <a href="/check_all"></a><input type="submit" value="Delete" id="deleteAll" ></a>
+        <input type="submit" value="Delete" id="deleteAll" >
     </form>
-    
+
     <script  src="/static/script_settings.js"></script>
 
 
