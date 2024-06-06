@@ -1,6 +1,6 @@
 # load flask and define app
 import flask
-app = flask.Flask ("webnote")
+app = flask.Flask ("pharmapp")
 
 # DateTime module to compare current date with expiry date
 from datetime import date
