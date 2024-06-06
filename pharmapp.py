@@ -8,6 +8,10 @@ from datetime import date
 # Pandas module to deal with the objects: transform them to dataframes, save as csv, etc
 import pandas as pd
 
+# function to get all drugs as DF from csv storage
+def get_all_drugs_in_DF():
+    all_drugs_DF = pd.read_csv("database/drugs.csv", index_col=[0])
+    return all_drugs_DF
 
 # function to get html codes
 def get_html (page_name):
@@ -44,18 +48,17 @@ def add_new_drug ():
 
 # function to get all drugs in a html table from csv storage
 def get_all_drugs_in_html():
-    all_drugs_DF = pd.read_csv("database/drugs.csv", index_col=[0])
-    all_drugs_html_table = all_drugs_DF.to_html() # transforms to html table, taken as template
-    return all_drugs_html_table
-
-# function to get all drugs as DF from csv storage
-def get_all_drugs_in_DF():
-    all_drugs_DF = pd.read_csv("database/drugs.csv", index_col=[0])
-    return all_drugs_DF
+    all_drugs_DF = get_all_drugs_in_DF()
+    if len(all_drugs_DF) == 0: # check if the database has any values, if not return message
+        all_drugs_html_table = "<p id='dont_have'>Your database is empty!</p>"
+        return all_drugs_html_table
+    else:   # else return the database in html table
+        all_drugs_html_table = all_drugs_DF.to_html() # transforms to html table, taken as template
+        return all_drugs_html_table
 
 # funtion to search in the drug DataFrame and return all rows that contains the search term "Name" as a list
 def search_name_in_drugs_DF(search_name):
-    all_drugs = pd.read_csv("database/drugs.csv", index_col=[0])
+    all_drugs = get_all_drugs_in_DF()
     # result = (all_drugs.loc[all_drugs['Name'].isin([search_name])]) # exact match case sensitive
     result = (all_drugs.loc[all_drugs['Name'].str.lower().isin([search_name.lower()])]) # case insensitive search
     # for partial match the 'isin' should be changed to 'contains'. But that would return a boolean, tha tis not compatible wiht the rest of the worflow.
@@ -64,7 +67,7 @@ def search_name_in_drugs_DF(search_name):
 
 # function to search in the drug DataFrame and return all rows that contains the search term "Field of Effect" as a list
 def search_effect_in_drugs_DF(search_effect):
-    all_drugs = pd.read_csv("database/drugs.csv", index_col=[0])
+    all_drugs = get_all_drugs_in_DF
     result = (all_drugs.loc[all_drugs['Field of effect'].isin([search_effect])])
     drug = result.to_dict('list')
     return drug
@@ -175,7 +178,7 @@ def delete_expired():
     all_drugs_DF['Expiry date'] = pd.to_datetime(all_drugs_DF['Expiry date'], format='%Y-%m-%d') # transform Expiry date str values to date
     result = all_drugs_DF.loc[(all_drugs_DF['Expiry date'] >= str(today))] # filter for those that are not yet expired and save in another DF
     result.to_csv("database/drugs.csv") #save the not expitred to the database csv
-    return get_html("settings")
+
     
 
 # routes
@@ -230,17 +233,19 @@ def settings():
 @app.route("/settings_del")
 def delete_all():
     delete_term = ""
-    delete_term = flask.request.args.get("delete")
-    if str(delete_term) == "delete_all":
-        print(delete_term)
-        print("____ALL_____")
-        deleted_all = delete_all_data()
-        return deleted_all
-    elif str(delete_term) == "delete_expired":
-        print(delete_term)
-        print("____EXP_____")
-        deleted_expired = delete_expired()
-        return deleted_expired
+    delete_term = flask.request.args.get("delete") # get the value from the dropdown
+    if str(delete_term) == "delete_all": # check the value, if delete all:
+        delete_all_data() # delete all data
+        html_page = get_html("check") # then load the search all page (Checl_all)
+        table = ""
+        table = get_all_drugs_in_html() 
+        return html_page.replace("$$DRUGS_TABLE$$", table)
+    elif str(delete_term) == "delete_expired": # check the value, if delete only expired:
+        delete_expired()  # delete all expired
+        html_page = get_html("check") # then load the search all page (Checl_all)
+        table = ""
+        table = get_all_drugs_in_html() 
+        return html_page.replace("$$DRUGS_TABLE$$", table)
     else:
         pass
 
