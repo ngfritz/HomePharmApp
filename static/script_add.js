@@ -1,16 +1,7 @@
 // things for the username
 const navUsername = document.getElementById("navUsername");
 const user = localStorage.getItem("username");
-
-// user name dependent welcome message
-
-if ( user != null){
-    navUsername.innerHTML = "Username: " + user;
-}
-
-
 // things for the added drug display
-
 const drug_name = document.getElementById ("drug_name");
 const effect_type = document.getElementById ("effect_type");
 const exp_date = document.getElementById ("exp_date"); 
@@ -23,6 +14,13 @@ const addNewDrugButton = document.getElementById("addNewDrugButton");
 const backToAddButton = document.getElementById("backToAddButton");
 
 
+// user name dependent welcome message
+
+if ( user != null){
+    navUsername.innerHTML = "Username: " + user;
+}
+
+// function to display the entered values
 function savedDrug(){
     dn = localStorage.getItem("Drug Name");
     et = localStorage.getItem("Field of Effect");
@@ -35,6 +33,7 @@ function savedDrug(){
     added_drug.innerHTML = table;
 };
 
+// function that deletes entered values from local storage
 function clean(){
     localStorage.removeItem("Drug Name");
     localStorage.removeItem("Field of Effect");
@@ -47,5 +46,5 @@ function clean(){
 };
 
 
-savedDrug();
+savedDrug();// it is run every time when page is loaded
 backToAddButton.addEventListener("click",clean);

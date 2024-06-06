@@ -4,13 +4,35 @@ const enterUsername = document.getElementById("enterUsername");
 const navUsername = document.getElementById("navUsername");
 const changeUsernameButton = document.getElementById("changeUsernameButton");
 const user = localStorage.getItem("username");
+// things for the added drug display
+const drug_name = document.getElementById ("drug_name");
+const effect_type = document.getElementById ("effect_type");
+const exp_date = document.getElementById ("exp_date"); 
+const active_ingredient = document.getElementById ("active_ingredient");
+const storage_location = document.getElementById ("storage_location");
+const stock = document.getElementById ("stock");
+const other = document.getElementById ("other");
+const added_drug = document.getElementById ("added_drug");
+const addNewDrugButton = document.getElementById("addNewDrugButton");
 
 
+
+// save username function
 function saveUser(){
     localStorage.setItem("username", addUsername.value);
     welcome.innerHTML = "Welcome <em>" + user + "</em>!";
 }
 
+// store entered value in local strorage when adding new drug
+function saveDrug(){
+    localStorage.setItem("Drug Name", drug_name.value);
+    localStorage.setItem("Field of Effect", effect_type.value);
+    localStorage.setItem("Expiry Date", exp_date.value);
+    localStorage.setItem("Active Ingredient", active_ingredient.value);
+    localStorage.setItem("Storage Location", storage_location.value);
+    localStorage.setItem("Stock available", stock.value);
+    localStorage.setItem("Other Comment", other.value);
+}
 
 
 // user name dependent welcome message
@@ -27,30 +49,6 @@ else {
     
 }
 
-
-// things for the added drug display
-
-const drug_name = document.getElementById ("drug_name");
-const effect_type = document.getElementById ("effect_type");
-const exp_date = document.getElementById ("exp_date"); 
-const active_ingredient = document.getElementById ("active_ingredient");
-const storage_location = document.getElementById ("storage_location");
-const stock = document.getElementById ("stock");
-const other = document.getElementById ("other");
-const added_drug = document.getElementById ("added_drug");
-const addNewDrugButton = document.getElementById("addNewDrugButton");
-
-
-
-function saveDrug(){
-    localStorage.setItem("Drug Name", drug_name.value);
-    localStorage.setItem("Field of Effect", effect_type.value);
-    localStorage.setItem("Expiry Date", exp_date.value);
-    localStorage.setItem("Active Ingredient", active_ingredient.value);
-    localStorage.setItem("Storage Location", storage_location.value);
-    localStorage.setItem("Stock available", stock.value);
-    localStorage.setItem("Other Comment", other.value);
-}
-
+// event listener for saveDrug function
 addNewDrugButton.addEventListener("click",saveDrug);
 

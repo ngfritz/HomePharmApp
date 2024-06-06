@@ -1,6 +1,6 @@
 # load flask and define app
 import flask
-app = flask.Flask ("pharmapp")
+app = flask.Flask ("homepharmapp")
 
 # DateTime module to compare current date with expiry date
 from datetime import date
@@ -30,7 +30,7 @@ def add_new_drug ():
         html_page = get_html("index")
         message = "<h3 id='mandatory_field'>* Enter vaslue(s) to the mandatory fields!</h3>"
         return html_page.replace("<h3>* mandatory fields</h3>", message)
-    else:
+    else: # get all input values from the frontend
         drug_name = [flask.request.args.get("drug_name")] 
         effect_type = [flask.request.args.get("effect_type")]
         exp_date = [flask.request.args.get("exp_date")]
@@ -61,18 +61,18 @@ def search_name_in_drugs_DF(search_name):
     all_drugs = get_all_drugs_in_DF()
     # result = (all_drugs.loc[all_drugs['Name'].isin([search_name])]) # exact match case sensitive
     result = (all_drugs.loc[all_drugs['Name'].str.lower().isin([search_name.lower()])]) # case insensitive search
-    # for partial match the 'isin' should be changed to 'contains'. But that would return a boolean, tha tis not compatible wiht the rest of the worflow.
+    # for partial match the 'isin' should be changed to 'contains'. But that would return a boolean, that is not compatible wiht the rest of the worflow.
     drug = result.to_dict('list')
     return drug
 
 # function to search in the drug DataFrame and return all rows that contains the search term "Field of Effect" as a list
 def search_effect_in_drugs_DF(search_effect):
     all_drugs = get_all_drugs_in_DF
-    result = (all_drugs.loc[all_drugs['Field of effect'].isin([search_effect])])
+    result = (all_drugs.loc[all_drugs['Field of effect'].isin([search_effect])]) # as the values are predefined at input and at search exact match is enough
     drug = result.to_dict('list')
     return drug
 
-# each drug in the inventory is one object defined by the drug class. it has some parameters
+# each drug in the inventory shall be transformed to an object defined by the Drug class. it has some parameters
 class Drug:
     def __init__(self, drug_name, effect_type, exp_date, active_ingredient, storage_location, stock, other):
         self.drug_name = drug_name
@@ -98,7 +98,6 @@ class Drug:
 
 # function to create an object from the list that was returned from the search by name
 def make_an_object_by_name(drug):
-    #drug = search_in_drugs_DF(search_name) # I rather run this separately, got too complicated
     drug_name = ','.join(drug['Name']) # get all the coulumns that is in the hit list to a dictionary
     drug_names = drug_name.split(",") # transform the dictionary values to a list
     effect_type = ','.join(drug['Field of effect'])
@@ -118,21 +117,20 @@ def make_an_object_by_name(drug):
     if drug_names == ['']: # if the object is empty (there was no hit, return message)
         table = "<p class='table' id='dont_have'>You don't have such a drug in your inventory.</p> "
         return table
-    else: #if there's hit create on object for all of them
+    else: #if there's hit create one object for all of them
         for i in range(len(drug_names)):
             # define a variable that has all the parameters for the Drug class as a list
             param = [drug_names[i], effect_types[i], exp_dates[i], active_ingredients[i], storage_locations[i], stocks[i], others[i]]
             drug_data = Drug(*param) # then create the object
             usable = drug_data.is_usable(drug_data.exp_date) #check usability (before or after exp. date)
-            if usable == True: #if usable show message accordingly paragaph id determines color coding (green)
+            if usable == True: #if usable, show message accordingly paragaph id determines color coding (green), append all
                 table += "<p id='usable'><b>"+ drug_data.drug_name +":</b> You can use this drug until <b>" + drug_data.exp_date + "</b>.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
-            else:
+            else: #if NOT usable, show message accordingly paragaph id determines color coding (red), append all
                 table += "<p id='non_usable'><b>" + drug_data.drug_name + "</b>: This drug has expired on <b>"  + drug_data.exp_date + "</b>. You shouldn't take it.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
         return table
     
-# function to create an object from the list that was returned from the search by effect
+# function to create an object from the list that was returned from the search by effect (same logic as with Name search)
 def make_an_object_by_effect(drug):
-    #drug = search_in_drugs_DF(search_name) # I rather run this separately, got too complicated
     drug_name = ','.join(drug['Name']) # get all the coulumns that is in the hit list to a dictionary
     drug_names = drug_name.split(",") # transform the dictionary values to a list
     effect_type = ','.join(drug['Field of effect'])
@@ -152,15 +150,15 @@ def make_an_object_by_effect(drug):
     if effect_types == ['']: # if the object is empty (there was no hit, return message)
         table = "<p class='table' id='dont_have'>You don't have such a drug in your inventory.</p> "
         return table
-    else: #if there's hit create on object for all of them
+    else: #if there's hit create one object for all of them
         for i in range(len(effect_types)):
             # define a variable that has all the parameters for the Drug class as a list
             param = [drug_names[i], effect_types[i], exp_dates[i], active_ingredients[i], storage_locations[i], stocks[i], others[i]]
             drug_data = Drug(*param) # then create the object
             usable = drug_data.is_usable(drug_data.exp_date) #check usability (before or after exp. date)
-            if usable == True: #if usable show message accordingly paragaph id determines color coding (green)
+            if usable == True: #if usable, show message accordingly paragaph id determines color coding (green)
                 table += "<p id='usable'><b>"+ drug_data.drug_name +":</b> You can use this drug until <b>" + drug_data.exp_date + "</b>.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
-            else:
+            else: #if NOT usable, show message accordingly paragaph id determines color coding (red)
                 table += "<p id='non_usable'><b>" + drug_data.drug_name + "</b>: This drug has expired on <b>"  + drug_data.exp_date + "</b>. You shouldn't take it.</p><p class='table'>It is a/an <b>" + drug_data.effect_type + "</b>. It is stored in: <b>" + drug_data.storage_location + "</b> and you have still <b>" + drug_data.stock + "</b> from it. You also registered the following comment: " + drug_data.other + ".</p>"
         return table
 
@@ -223,7 +221,7 @@ def check_list():
 def check_all():
     html_page = get_html("check")
     table = ""
-    table = get_all_drugs_in_html()
+    table = get_all_drugs_in_html() # serch for all data without any filter
     return html_page.replace("$$DRUGS_TABLE$$", table)
 
 @app.route("/settings")
