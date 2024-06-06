@@ -31,6 +31,19 @@
         <input type="text" id="search_name" class="box" name="search_name" placeholder="Drug's name">
         <input type="submit" value="Search">
     </form>
+<br>
+    <form action="/check_list" method="get">
+        <select name="search_effect" id="effect_type">
+            <option selected="selected" value="" disabled selected>Choose a Field of effect</option>
+            <option value="painkiller">Painkiller</option>
+            <option value="antibiotics">Antibiotics</option>
+            <option value="fever">Fever Reducer</option>
+            <option value="antihistamine">Antihistamine</option>
+            <option value="antacid">Antacid</option>
+            <option value="other">Other</option>
+        </select>
+        <input type="submit" value="Search">
+    </form>
   
     <br>
     <h3>List all your inventory</h3>    
