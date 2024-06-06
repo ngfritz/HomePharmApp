@@ -11,7 +11,7 @@ function changeUsername(){
 
 // function for the Delete alert
 function alert(){
-    confirm("Please confirm that you want to delete records!\n This transaction is not reversible.");
+    confirm("Please confirm that you want to delete records!\nThis transaction is not reversible.");
 }
 
 // user name dependent welcome message

@@ -58,17 +58,17 @@ def get_all_drugs_in_html():
 
 # funtion to search in the drug DataFrame and return all rows that contains the search term "Name" as a list
 def search_name_in_drugs_DF(search_name):
-    all_drugs = get_all_drugs_in_DF()
-    # result = (all_drugs.loc[all_drugs['Name'].isin([search_name])]) # exact match case sensitive
-    result = (all_drugs.loc[all_drugs['Name'].str.lower().isin([search_name.lower()])]) # case insensitive search
+    all_drugs_DF = get_all_drugs_in_DF()
+    # result = (all_drugs_DF.loc[all_drugs_DF['Name'].isin([search_name])]) # exact match case sensitive
+    result = all_drugs_DF.loc[all_drugs_DF['Name'].str.lower().isin([search_name.lower()])] # case insensitive search
     # for partial match the 'isin' should be changed to 'contains'. But that would return a boolean, that is not compatible wiht the rest of the worflow.
     drug = result.to_dict('list')
     return drug
 
 # function to search in the drug DataFrame and return all rows that contains the search term "Field of Effect" as a list
 def search_effect_in_drugs_DF(search_effect):
-    all_drugs = get_all_drugs_in_DF
-    result = (all_drugs.loc[all_drugs['Field of effect'].isin([search_effect])]) # as the values are predefined at input and at search exact match is enough
+    all_drugs_DF = get_all_drugs_in_DF()
+    result = all_drugs_DF.loc[all_drugs_DF['Field of effect'].isin([search_effect])] # as the values are predefined at input and at search exact match is enough
     drug = result.to_dict('list')
     return drug
 
