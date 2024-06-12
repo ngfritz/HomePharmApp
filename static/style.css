@@ -60,6 +60,7 @@ header {
 
 .mandatory {
     border-color: red;
+    background-color: white;
 }
 
 .table {

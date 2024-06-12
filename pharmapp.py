@@ -34,13 +34,29 @@ def add_new_drug ():
         drug_name = [flask.request.args.get("drug_name")] 
         effect_type = [flask.request.args.get("effect_type")]
         exp_date = [flask.request.args.get("exp_date")]
-        active_ingredient = [flask.request.args.get("active_ingredient")]
-        storage_location = [flask.request.args.get("storage_location")]
-        stock = [flask.request.args.get("stock")]
-        other = [flask.request.args.get("other")]
+        ai = [flask.request.args.get("active_ingredient")] # if no entry add default value to non-mandatory fields
+        if ai == ['']:
+            active_ingredient = "not defined"
+        else:
+            active_ingredient = ai
+        sl = [flask.request.args.get("storage_location")]
+        if sl == ['']:
+            storage_location = "not defined"
+        else:
+            storage_location = sl
+        stk = [flask.request.args.get("stock")]
+        if stk == ['']:
+            stock = "not defined"
+        else:
+            stock = stk
+        oth = [flask.request.args.get("other")]
+        if oth == ['']:
+            other = "-"
+        else:
+            other = oth
         # combine the new values to one 
         drug_data = {'Name': drug_name, 'Field of effect': effect_type, 'Expiry date': exp_date, 'Active ingredient': active_ingredient,'Location': storage_location,'Stock available':stock,'Other comments':other}
-        new_data_frame = pd.DataFrame(drug_data) # set the new entry as DF
+        new_data_frame = pd.DataFrame(drug_data, dtype="string") # set the new entry as DF
         all_drugs_DF = pd.read_csv("database/drugs.csv", index_col=[0]) #open the exisitng dataset from the csv
         all_drugs_DF = all_drugs_DF._append(new_data_frame, ignore_index = True) # append the new data to the end
         all_drugs_DF.to_csv("database/drugs.csv") # save the updated dataset to the csv 
@@ -98,7 +114,7 @@ class Drug:
     
     # methode to check availability (stock > 0)
     def available (self, stock):
-        if str(stock) == "0":
+        if str(stock) == "0" :
             availability = False
             return availability
         
@@ -111,7 +127,7 @@ def make_an_object_by_name(drug):
     effect_types = effect_type.split(",")
     exp_date = ','.join(drug['Expiry date'])
     exp_dates = exp_date.split(",")
-    active_ingredient = ','.join(drug['Active ingredient'])
+    active_ingredient = ','.join(drug['Active ingredient']) 
     active_ingredients = active_ingredient.split(",")
     storage_location = ','.join(drug['Location'])
     storage_locations = storage_location.split(",")
