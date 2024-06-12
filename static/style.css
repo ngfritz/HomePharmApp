@@ -70,7 +70,7 @@ header {
     padding: 5px;
 }
 
-#mandatory_field{
+.mandatory_field{
     font-size: 25px;
     color: red;
 }
@@ -81,7 +81,7 @@ header {
     font-weight: bolder;
 }
 
-#effect_type{
+#effectType{
     background-color: white;
 }
 

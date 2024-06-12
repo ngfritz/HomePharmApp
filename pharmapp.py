@@ -246,8 +246,12 @@ def settings():
 @app.route("/settings_del")
 def delete_all():
     delete_term = ""
-    delete_term = flask.request.args.get("delete") # get the value from the dropdown
-    if str(delete_term) == "delete_all": # check the value, if delete all:
+    delete_term = flask.request.args.get("deleteSelect") # get the value from the dropdown
+    if str(delete_term) == "selected": # check the value is still the default one
+        html_page = get_html("settings")
+        table = '<h1 class="mandatory_field" id="mandatoryField">Please select what data you want to delete!</h1>'
+        return html_page.replace("<h1>Do you want to delete some of your data?</h1>", table)
+    elif str(delete_term) == "delete_all": # check the value, if delete all:
         delete_all_data() # delete all data
         html_page = get_html("check") # then load the search all page (Checl_all)
         table = ""

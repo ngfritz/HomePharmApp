@@ -27,18 +27,18 @@
         <a href="/"><input type="submit" value="Save" id="changeUsernameButton"></a>
     </div>
 <br>
-<h1>Do you want to delete of your data?</h1>
+<h1>Do you want to delete some of your data?</h1>
 
     <form action="/settings_del" method="get">
-        <select name="delete" id="selectDelete">
-            <option selected="selected" value="" disabled selected>Choose what you want to delete</option>
+        <select name="deleteSelect" id="selectDelete">
+            <option value="selected" selected>Choose what you want to delete</option>
             <option value="delete_expired">Delete expired drugs</option>
             <option value="delete_all">Delete all</option>
         </select>
         <br><br>
         <input type="submit" value="Delete" id="deleteAll" >
     </form>
-
+    
     <script  src="/static/scriptSettings.js"></script>
 
 
