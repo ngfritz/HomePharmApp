@@ -22,14 +22,14 @@ if ( user != null){
 
 // function to display the entered values
 function savedDrug(){
-    dn = localStorage.getItem("Drug Name");
-    et = localStorage.getItem("Field of Effect");
-    ed = localStorage.getItem("Expiry Date");
-    ai = localStorage.getItem("Active Ingredient");
-    sl = localStorage.getItem("Storage Location");
-    stk = localStorage.getItem("Stock available");
-    oth = localStorage.getItem("Other Comment");
-    table = "<p>Drug Name: <b>" + dn + "</b></p><p>Fiels of Effect: <b>" + et + "</b></p><p>Expiry Date: <b>" + ed + "</b></p><p>Active Ingredient: <b>" + ai + "</b></p><p>Storage Location: <b>" + sl + "</b></p><p>Stock available: <b>" + stk + "</b></p><p>Other comments: <b>" + oth + "</b></p>"; 
+    const dn = localStorage.getItem("Drug Name");
+    const et = localStorage.getItem("Field of Effect");
+    const ed = localStorage.getItem("Expiry Date");
+    const ai = localStorage.getItem("Active Ingredient");
+    const sl = localStorage.getItem("Storage Location");
+    const stk = localStorage.getItem("Stock available");
+    const oth = localStorage.getItem("Other Comment");
+    const table = "<p>Drug Name: <b>" + dn + "</b></p><p>Fiels of Effect: <b>" + et + "</b></p><p>Expiry Date: <b>" + ed + "</b></p><p>Active Ingredient: <b>" + ai + "</b></p><p>Storage Location: <b>" + sl + "</b></p><p>Stock available: <b>" + stk + "</b></p><p>Other comments: <b>" + oth + "</b></p>"; 
     added_drug.innerHTML = table;
 };
 
