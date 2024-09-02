@@ -1,4 +1,4 @@
-PharmApp
+HomePharmApp
 
 This webApp helps users to track their drug inventory at home to avoid redundant purchasing and wasting.
 
@@ -6,6 +6,7 @@ The application can store some basic information about the drugs in a searchable
 
 The user is able to quickly loog up a drug before purchasing it in the pharmacy. If current stock allows, it is not necessary to purchase again.
 
+This application was started as the final project of the EPFL Extension School - Thinking and Creating with code cours.
 
 Pages:
 1. Register a drug
