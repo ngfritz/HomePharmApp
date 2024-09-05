@@ -51,10 +51,7 @@
      <input type="text" id="other" class="box" name="other" placeholder="Any other comment">
      <input type="submit" value="Save" id="saveNewDrugButton">
  </form>
- <form method="post">
-    <input type="text" class="mandatory" id="drug_name" class="box" name="drug_name" placeholder="Drug's name" value="{{request.form['Drug Name'] }}" required>  
-
- </form>
+ 
  <h3 id="mandatoryField">Mandatory fields</h3>
 
 
@@ -64,8 +61,23 @@
         
     </div>
 
-    <a href='/'><button id="addNewButton">Add a new drug</button></a>
-    <a href='/'><button id="editNewButton">Edit the last drug</button></a>
+    <!-- function to run add_new_drug in backend without reloading the page -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+        $(function() {
+          $('a#addNewButton').on('click', function(e) {
+            e.preventDefault()
+            $.getADD('/background_process',
+                function(data) {
+              //do nothing
+            });
+            return false;
+          });
+        });
+</script>
+
+    <a><button id="addNewButton" onclick="add_new_drug()">Add a new drug</button></a>
+    <a><button id="editNewButton">Edit the last drug</button></a>
 
     <script  src="/static/scriptAdd.js"></script>
 

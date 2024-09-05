@@ -21,6 +21,19 @@ if ( user != null){
     navUsername.innerHTML = "Username: " + user;
 }
 
+// store entered value in local strorage when adding new drug
+function saveDrug(){
+    localStorage.setItem("Drug Name", drugName.value);
+    localStorage.setItem("Field of Effect", effectType.value);
+    localStorage.setItem("Expiry Date", expDate.value);
+    localStorage.setItem("Active Ingredient", activeIngredient.value);
+    localStorage.setItem("Storage Location", storageLocation.value);
+    localStorage.setItem("Stock available", stock.value);
+    localStorage.setItem("Other Comment", other.value);
+}
+
+
+
 // function to display the entered values
 function savedDrug(){
     const dn = localStorage.getItem("Drug Name");
@@ -61,6 +74,6 @@ function clean(){
 };
 
 savedDrug();// it is run every time when page is loaded
-saveNewDrugButton.addEventListener("click",updateDrug);
+saveNewDrugButton.addEventListener("click",saveDrug);
 editNewButton.addEventListener("click",updateDrug);
 addNewButton.addEventListener("click",clean);

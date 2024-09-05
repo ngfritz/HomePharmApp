@@ -283,4 +283,13 @@ def delete_all():
     else:
         pass
 
+# @app.route("/json")
+# def json():
+#     return get_html('json')
+
+@app.route('/background_process')
+def background_process():
+    add_new_drug ()
+    return ("nothing")
+
 # python -m flask --app pharmapp.py run
