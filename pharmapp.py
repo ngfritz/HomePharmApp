@@ -216,10 +216,11 @@ def delete_expired():
 def home():
     return get_html("index")
 
-@app.route("/add")
+@app.route("/add", methods=('GET','POST'))
 def add():
-    addnew_page = add_new_drug () # run the add_new_drug function: save the entered data and reload the page
-    return addnew_page
+    # addnew_page = add_new_drug () # run the add_new_drug function: save the entered data and reload the page
+    # return addnew_page
+    return get_html("add")
 
 @app.route("/check")
 def check_start():

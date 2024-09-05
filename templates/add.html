@@ -12,7 +12,7 @@
 
         <div class="navbar">
           <a class="nav" href="/">Home</a>
-          <a class="nav" id="currentpage" href="/add">Added Drug</a>
+          <a class="nav" id="currentpage" href="/add">Add New Drug</a>
           <a class="nav" href="/check">Search Drugs</a>
           <a class="nav" href="/settings">Settings</a>
           <a id="navUsername">Set your username in the Settings</a>
@@ -20,12 +20,52 @@
         </div>
     
     </nav>
-    <h2>You've just registered the following drug:</h2>
+
+    <h1>Enter data to register a new drug</h1>
+  
+
+    <form action="/add" method="get" class="inputboxes">
+     <input type="text" class="mandatory" id="drug_name" class="box" name="drug_name" placeholder="Drug's name" required>  
+     <!-- <script>
+        const storedName =localStorage.getItem("drug_name") || '';
+        const newName = document.getElementById('newName');
+        newName.value = storedName;
+        newName.addEventListener('input', ()=>{
+            localStorage.setItem('Drug Name',newName.value);
+        });
+     </script> -->
+     <select name="effect_type" id="effect_type" class="mandatory">
+         <option selected="selected" value="" disabled selected>Choose a Field of effect</option>
+         <option value="fever reducer & painkiller">Fever Reducer & Painkiller</option>
+         <option value="painkiller">Painkiller</option>
+         <option value="anti-inflammatory">Anti-inflammatory</option>
+         <option value="antibiotics">Antibiotics</option>
+         <option value="antihistamine">Antihistamine</option>
+         <option value="antacid">Antacid</option>
+         <option value="other">Other</option>
+     </select>
+     <input type="date" class="mandatory" id="exp_date" class="box" name="exp_date" placeholder="YYYY-MM-DD" required>
+     <input type="text" id="active_ingredient" class="box" name="active_ingredient" placeholder="Active ingredient">
+     <input type="text" id="storage_location" class="box" name="storage_location" placeholder="Where it is stored?">
+     <input type="text" id="stock" class="box" name="stock" placeholder="Add the quantity you have">
+     <input type="text" id="other" class="box" name="other" placeholder="Any other comment">
+     <input type="submit" value="Save" id="saveNewDrugButton">
+ </form>
+ <form method="post">
+    <input type="text" class="mandatory" id="drug_name" class="box" name="drug_name" placeholder="Drug's name" value="{{request.form['Drug Name'] }}" required>  
+
+ </form>
+ <h3 id="mandatoryField">Mandatory fields</h3>
+
+
+
+    <h2>The last drug that you've modified is:</h2>
     <div id="added_drug">
         
     </div>
 
-    <a href='/'><button id="backToAddButton">Add a new drug</button></a>
+    <a href='/'><button id="addNewButton">Add a new drug</button></a>
+    <a href='/'><button id="editNewButton">Edit the last drug</button></a>
 
     <script  src="/static/scriptAdd.js"></script>
 
